@@ -7,6 +7,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var visible = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top: 60),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -63,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top: 30),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                  obscureText: visible,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -73,9 +76,16 @@ class _LoginPageState extends State<LoginPage> {
                     labelStyle: TextStyle(
                       color: Colors.black87,
                     ),
-                    suffixIcon: Icon(
-                      Icons.visibility,
-                      color: Colors.black87,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          visible = !visible;
+                        });
+                      },
+                      child: Icon(
+                        visible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.black87,
+                      ),
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
