@@ -112,7 +112,10 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {},
                   child: Text(
                     'Fazer Login',
-                    style: GoogleFonts.inter(color: Colors.white, fontSize: 25),
+                    style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

@@ -8,7 +8,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var cardColor = Color.fromRGBO(300, 300, 300, 1);
   var defaultColor = Color.fromRGBO(87, 103, 222, 1);
 
   var events = ['opa', 'salve'];
@@ -104,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    CreateEvent();
+                    return CreateEvent();
                   }),
                 );
               },
