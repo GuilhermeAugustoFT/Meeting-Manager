@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
             style: GoogleFonts.inter(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-              fontSize: 30,
+              fontSize: 25,
             ),
           ),
         ),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Reunião',
                                 style: GoogleFonts.inter(
-                                  fontSize: 23,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -58,26 +58,25 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(left: 13),
+                                  margin: EdgeInsets.only(left: 13, top: 5),
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
                                     'Sala do cafézinho',
                                     style: GoogleFonts.inter(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left: 50,
-                                    right: 5,
-                                  ),
+                                      left: 50, right: 5, top: 5),
                                   child: Icon(
                                     Icons.calendar_today,
                                   ),
                                 ),
                                 Container(
+                                  margin: EdgeInsets.only(top: 5),
                                   alignment: Alignment.bottomRight,
                                   child: Text(
                                     '12/08/21',
@@ -109,8 +108,8 @@ class _HomePageState extends State<HomePage> {
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 30),
-                width: 70,
-                height: 70,
+                width: 60,
+                height: 60,
                 decoration: BoxDecoration(
                   color: defaultColor,
                   borderRadius: BorderRadius.all(

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/models/employer.dart';
+import 'package:project/models/employer_repository.dart';
+
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,6 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var numberController = new TextEditingController();
+  var passwordController = new TextEditingController();
+
   var visible = true;
   @override
   Widget build(BuildContext context) {
@@ -38,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top: 60),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                  controller: numberController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -65,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top: 30),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: visible,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -109,7 +118,22 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      var statusCode =
+                          await EmployerRepository.authenticateEmployer(
+                              Employer.fromEmployer(numberController.text,
+                                  passwordController.text));
+
+                      if (statusCode == 200)
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => HomePage()));
+                      else
+                        print('Funcionario invalido');
+                    } catch (error) {
+                      print('Erro durante requisicao');
+                    }
+                  },
                   child: Text(
                     'Fazer Login',
                     style: GoogleFonts.inter(

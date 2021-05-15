@@ -10,6 +10,8 @@ class _CreateEventState extends State<CreateEvent> {
   var defaultColor = Color.fromRGBO(87, 103, 222, 1);
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
   var selected = 0;
+  var textColor = Colors.black;
+
   var scrumTypes = [
     'Backlog do produto',
     'Sprint backlog',
@@ -25,7 +27,12 @@ class _CreateEventState extends State<CreateEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'Tipo de evento',
+          style: GoogleFonts.inter(
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
       ),
@@ -35,16 +42,16 @@ class _CreateEventState extends State<CreateEvent> {
           margin: EdgeInsets.only(top: 10, left: 20, right: 20),
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Selecione o tipo do evento',
-                  style: GoogleFonts.inter(
-                    fontSize: 27,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              // Container(
+              //   alignment: Alignment.topLeft,
+              //   child: Text(
+              //     'Selecione o tipo do evento',
+              //     style: GoogleFonts.inter(
+              //       fontSize: 27,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -69,7 +76,7 @@ class _CreateEventState extends State<CreateEvent> {
                         child: Text(
                           'Reunião',
                           style: GoogleFonts.inter(
-                              fontSize: 25,
+                              fontSize: 20,
                               color:
                                   selected == 1 ? Colors.white : Colors.black),
                         ),
@@ -95,9 +102,9 @@ class _CreateEventState extends State<CreateEvent> {
                       child: Container(
                         alignment: Alignment.center,
                         child: Text(
-                          'Mini Curso',
+                          'Mini curso',
                           style: GoogleFonts.inter(
-                              fontSize: 25,
+                              fontSize: 20,
                               color:
                                   selected == 2 ? Colors.white : Colors.black),
                         ),
@@ -130,7 +137,7 @@ class _CreateEventState extends State<CreateEvent> {
                         child: Text(
                           'Palestra',
                           style: GoogleFonts.inter(
-                              fontSize: 25,
+                              fontSize: 20,
                               color:
                                   selected == 3 ? Colors.white : Colors.black),
                         ),
@@ -177,48 +184,60 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                   color: containerColor,
                 ),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                child: GestureDetector(
+                  onTap: () {
+                    print('a');
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: selected == 5 ? defaultColor : containerColor,
                     ),
-                    color: selected == 5 ? defaultColor : containerColor,
-                  ),
-                  child: DropdownButtonFormField<String>(
-                      decoration:
-                          InputDecoration(enabledBorder: InputBorder.none),
-                      value: scrumType,
-                      isExpanded: true,
-                      items: scrumTypes
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              value,
-                              style: GoogleFonts.inter(
-                                fontSize: 20,
-                                color:
-                                    selected == 5 ? Colors.white : Colors.black,
+                    child: DropdownButtonFormField<String>(
+                        dropdownColor: containerColor,
+                        decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusColor: Colors.green),
+                        value: scrumType,
+                        isExpanded: true,
+                        items: scrumTypes
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            onTap: () {
+                              print('a');
+                            },
+                            value: value,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                value,
+                                style: GoogleFonts.inter(
+                                  fontSize: 20,
+                                  color: textColor,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String value) {
-                        setState(() {
-                          scrumType = value;
-                          selected = 5;
-                        });
-                      }),
+                          );
+                        }).toList(),
+                        onChanged: (String value) {
+                          setState(() {
+                            scrumType = value;
+                            textColor = Colors.white;
+                            selected = 5;
+                            scrumTypes.remove(value);
+                            scrumTypes.insert(0, value);
+                          });
+                        }),
+                  ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 200),
-                height: 60,
-                width: 350,
+                margin: EdgeInsets.only(top: 250),
+                height: 50,
+                width: 320,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(87, 103, 222, 1),
                   borderRadius: BorderRadius.all(
@@ -231,7 +250,7 @@ class _CreateEventState extends State<CreateEvent> {
                     'Continuar',
                     style: GoogleFonts.inter(
                         color: Colors.white,
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
