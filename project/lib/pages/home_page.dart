@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/pages/card_content.dart';
 import 'package:project/pages/create_event_page.dart';
+import 'package:project/pages/hero_dialog_route.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -41,53 +43,62 @@ class _HomePageState extends State<HomePage> {
                     child: Card(
                       color: Color.fromRGBO(230, 230, 230, 1),
                       elevation: 7,
-                      child: InkWell(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 13, top: 7),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Reunião',
-                                style: GoogleFonts.inter(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                      child: Hero(
+                        tag: 'teste',
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(HeroDialogRoute(builder: (context) {
+                              return CardContent();
+                            }));
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 13, top: 7),
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Reunião',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 13, top: 5),
-                                  alignment: Alignment.bottomLeft,
-                                  child: Text(
-                                    'Sala do cafézinho',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.normal,
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 13, top: 5),
+                                    alignment: Alignment.bottomLeft,
+                                    child: Text(
+                                      'Sala do cafézinho',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      left: 50, right: 5, top: 5),
-                                  child: Icon(
-                                    Icons.calendar_today,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 5),
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    '12/08/21',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 18,
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: 50, right: 5, top: 5),
+                                    child: Icon(
+                                      Icons.calendar_today,
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                  Container(
+                                    margin: EdgeInsets.only(top: 5),
+                                    alignment: Alignment.bottomRight,
+                                    child: Text(
+                                      '12/08/21',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
