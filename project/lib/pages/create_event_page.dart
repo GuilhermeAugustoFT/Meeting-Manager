@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/pages/create_event_place.dart';
 
 class CreateEvent extends StatefulWidget {
   @override
@@ -11,6 +12,8 @@ class _CreateEventState extends State<CreateEvent> {
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
   var selected = 0;
   var textColor = Colors.black;
+  var inDropDown = false;
+  var selectedEvent = '';
 
   var scrumTypes = [
     'Backlog do produto',
@@ -59,6 +62,8 @@ class _CreateEventState extends State<CreateEvent> {
                     onTap: () {
                       setState(() {
                         selected = 1;
+                        selectedEvent = 'Reunião';
+                        inDropDown = false;
                       });
                     },
                     child: Container(
@@ -87,6 +92,8 @@ class _CreateEventState extends State<CreateEvent> {
                     onTap: () {
                       setState(() {
                         selected = 2;
+                        selectedEvent = 'Mini Curso';
+                        inDropDown = false;
                       });
                     },
                     child: Container(
@@ -120,6 +127,8 @@ class _CreateEventState extends State<CreateEvent> {
                     onTap: () {
                       setState(() {
                         selected = 3;
+                        selectedEvent = 'Palestra';
+                        inDropDown = false;
                       });
                     },
                     child: Container(
@@ -148,6 +157,8 @@ class _CreateEventState extends State<CreateEvent> {
                     onTap: () {
                       setState(() {
                         selected = 4;
+                        selectedEvent = 'Apresentação';
+                        inDropDown = false;
                       });
                     },
                     child: Container(
@@ -184,54 +195,53 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                   color: containerColor,
                 ),
-                child: GestureDetector(
-                  onTap: () {
-                    print('a');
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      color: selected == 5 ? defaultColor : containerColor,
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
                     ),
-                    child: DropdownButtonFormField<String>(
-                        dropdownColor: containerColor,
-                        decoration: InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            focusColor: Colors.green),
-                        value: scrumType,
-                        isExpanded: true,
-                        items: scrumTypes
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            onTap: () {
-                              print('a');
-                            },
-                            value: value,
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                value,
-                                style: GoogleFonts.inter(
-                                  fontSize: 20,
-                                  color: textColor,
-                                ),
+                    color: selected == 5 ? defaultColor : containerColor,
+                  ),
+                  child: DropdownButtonFormField<String>(
+                      onTap: () {
+                        inDropDown = false;
+                      },
+                      dropdownColor: containerColor,
+                      decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusColor: Colors.green),
+                      value: scrumType,
+                      isExpanded: true,
+                      items: scrumTypes
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              value,
+                              style: GoogleFonts.inter(
+                                fontSize: 20,
+                                color: selected == 5 && !inDropDown
+                                    ? textColor
+                                    : Colors.black,
                               ),
                             ),
-                          );
-                        }).toList(),
-                        onChanged: (String value) {
-                          setState(() {
-                            scrumType = value;
-                            textColor = Colors.white;
-                            selected = 5;
-                            scrumTypes.remove(value);
-                            scrumTypes.insert(0, value);
-                          });
-                        }),
-                  ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          scrumType = value;
+                          textColor = Colors.white;
+                          selected = 5;
+                          selectedEvent = value;
+                          inDropDown = true;
+                          scrumTypes.remove(value);
+                          scrumTypes.insert(0, value);
+                        });
+                      }),
                 ),
               ),
               Container(
@@ -245,7 +255,14 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //passar selectedEvent como parametro
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return CreateEventPlace();
+                      }),
+                    );
+                  },
                   child: Text(
                     'Continuar',
                     style: GoogleFonts.inter(
