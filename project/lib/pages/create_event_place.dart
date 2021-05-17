@@ -85,97 +85,102 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 50),
+          margin: EdgeInsets.only(top: 100),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          //abrir calendario
-                          setState(() {
-                            pickDate(context);
-                          });
-                        },
-                        child: Container(
-                          height: 110,
-                          width: 110,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
+              Container(
+                margin: EdgeInsets.only(top: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            //abrir calendario
+                            setState(() {
+                              pickDate(context);
+                            });
+                          },
+                          child: Container(
+                            height: 110,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.calendar_today_outlined,
                               color: Colors.black,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+                              size: 50,
                             ),
                           ),
-                          child: Icon(
-                            Icons.calendar_today_outlined,
-                            color: Colors.black,
-                            size: 50,
-                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(
-                          date,
-                          style: GoogleFonts.inter(
-                            fontSize: 25,
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text(
+                            date,
+                            style: GoogleFonts.inter(
+                              fontSize: 25,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    // espacar os containers
-                    width: 60,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          // abrir relogio
-                          setState(() {
-                            pickTime(context);
-                          });
-                        },
-                        child: Container(
-                          height: 110,
-                          width: 110,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      // espacar os containers
+                      width: 60,
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            // abrir relogio
+                            setState(() {
+                              pickTime(context);
+                            });
+                          },
+                          child: Container(
+                            height: 110,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.schedule_outlined,
                               color: Colors.black,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+                              size: 50,
                             ),
                           ),
-                          child: Icon(
-                            Icons.schedule_outlined,
-                            color: Colors.black,
-                            size: 50,
-                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(
-                          time,
-                          style: GoogleFonts.inter(
-                            fontSize: 25,
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text(
+                            time,
+                            style: GoogleFonts.inter(
+                              fontSize: 25,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 50, left: 50, right: 50),
@@ -218,7 +223,7 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
                     }),
               ),
               Container(
-                margin: EdgeInsets.only(top: 250),
+                margin: EdgeInsets.only(top: 220),
                 height: 50,
                 width: 320,
                 decoration: BoxDecoration(
@@ -247,7 +252,8 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
                               this.selectedPlace,
                               employers,
                               teams,
-                              departments);
+                              departments,
+                              employers);
                         }),
                       );
                     }

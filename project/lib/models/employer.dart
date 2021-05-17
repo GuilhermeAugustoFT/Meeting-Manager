@@ -17,6 +17,10 @@ class Employer {
 
   Employer.fromEvent(this._name, this._nickname, this._photo, this._number);
 
+  getId() {
+    return this._id;
+  }
+
   getName() {
     return this._name;
   }
@@ -39,5 +43,9 @@ class Employer {
 
   getDepartment() {
     return this._department;
+  }
+
+  toString() {
+    return "EmployerId: ${this._id}";
   }
 }

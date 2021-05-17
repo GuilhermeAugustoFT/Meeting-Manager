@@ -36,15 +36,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
-        title: Center(
-          child: Text(
-            'Home',
-            style: GoogleFonts.inter(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
+        title: Text(
+          'Home',
+          style: GoogleFonts.inter(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
           ),
         ),
       ),

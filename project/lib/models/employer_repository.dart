@@ -16,8 +16,8 @@ class EmployerRepository {
     var employers = [];
 
     for (var item in map)
-      employers.add(Employer.fromEvent(
-          item["name"], item["nickname"], item["number"], item["photo"]));
+      employers.add(Employer.allEmployers(item["id"], item["name"],
+          item["nickname"], item["number"], item["photo"]));
 
     return employers;
   }

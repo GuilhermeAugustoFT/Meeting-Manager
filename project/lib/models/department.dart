@@ -18,4 +18,8 @@ class Department {
   getMembersDepartment() {
     return _membersDepartment;
   }
+
+  toString() {
+    return "DepartmentId: ${this._id}";
+  }
 }

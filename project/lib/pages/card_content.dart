@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/employer.dart';
-import 'package:project/pages/hero_dialog_route.dart';
 
 class CardContent extends StatelessWidget {
   /// {@macro todo_card}
@@ -172,12 +171,14 @@ class CardContent extends StatelessWidget {
                                           child: Icon(Icons.pets),
                                         ),
                                         Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                                margin: EdgeInsets.only(
-                                                    top: 15, left: 10),
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
                                                 child: Text(
                                                     this
                                                         ._event
@@ -188,18 +189,25 @@ class CardContent extends StatelessWidget {
                                                         fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.bold))),
-                                            Container(
-                                                alignment: Alignment.topLeft,
-                                                margin: EdgeInsets.only(
-                                                    top: 5, left: 10),
-                                                child: Text(
-                                                    getNickname(this
-                                                            ._event
-                                                            .getMembersEvent()[
-                                                        index]),
-                                                    style: GoogleFonts.inter(
-                                                      fontSize: 15,
-                                                    ))),
+                                            Visibility(
+                                              visible:
+                                                  this._event.getMembersEvent()[
+                                                          index] is Employer
+                                                      ? true
+                                                      : false,
+                                              child: Container(
+                                                  alignment: Alignment.topLeft,
+                                                  margin: EdgeInsets.only(
+                                                      top: 5, left: 10),
+                                                  child: Text(
+                                                      getNickname(this
+                                                              ._event
+                                                              .getMembersEvent()[
+                                                          index]),
+                                                      style: GoogleFonts.inter(
+                                                        fontSize: 15,
+                                                      ))),
+                                            ),
                                           ],
                                         )
                                       ],

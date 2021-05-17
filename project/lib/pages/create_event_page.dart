@@ -44,6 +44,7 @@ class _CreateEventState extends State<CreateEvent> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          padding: EdgeInsets.only(top: 50),
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.only(top: 10, left: 20, right: 20),
           child: Column(
@@ -248,7 +249,7 @@ class _CreateEventState extends State<CreateEvent> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 250),
+                margin: EdgeInsets.only(top: 220),
                 height: 50,
                 width: 320,
                 decoration: BoxDecoration(

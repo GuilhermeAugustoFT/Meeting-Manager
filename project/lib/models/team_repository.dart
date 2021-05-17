@@ -24,9 +24,16 @@ class TeamRepository {
           memberTeam["photo"],
         ));
 
+      var teamLeader = Employer.fromEvent(
+          item["teamLeader"]["name"],
+          item["teamLeader"]["nickname"],
+          item["teamLeader"]["photo"],
+          item["teamLeader"]["number"]);
+
       teams.add(Team.fromTeam(
         item["id"],
         item["name"],
+        teamLeader,
         membersTeam,
       ));
     }
