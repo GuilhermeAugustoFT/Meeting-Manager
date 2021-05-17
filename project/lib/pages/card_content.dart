@@ -148,9 +148,11 @@ class CardContent extends StatelessWidget {
                     Container(
                       height: 170,
                       child: ListView.builder(
+                          padding: EdgeInsets.only(top: 5),
                           itemCount: this._event.getMembersEvent().length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
+                                margin: EdgeInsets.only(top: 5),
                                 height: 80,
                                 width: 50,
                                 child: Card(
@@ -170,8 +172,8 @@ class CardContent extends StatelessWidget {
                                           child: Icon(Icons.pets),
                                         ),
                                         Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Container(
                                                 margin: EdgeInsets.only(
@@ -188,16 +190,16 @@ class CardContent extends StatelessWidget {
                                                             FontWeight.bold))),
                                             Container(
                                                 alignment: Alignment.topLeft,
-                                                margin: EdgeInsets.only(top: 5),
+                                                margin: EdgeInsets.only(
+                                                    top: 5, left: 10),
                                                 child: Text(
                                                     getNickname(this
                                                             ._event
                                                             .getMembersEvent()[
                                                         index]),
                                                     style: GoogleFonts.inter(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold))),
+                                                      fontSize: 15,
+                                                    ))),
                                           ],
                                         )
                                       ],
