@@ -6,6 +6,22 @@ import 'employer.dart';
 import 'event.dart';
 
 class EmployerRepository {
+  static findAllEmployers() async {
+    var response = await http.get(
+        Uri.parse('https://meeting-manager-api.herokuapp.com/api/employers'),
+        headers: {"Content-Type": "application/json"});
+
+    var map = jsonDecode(response.body);
+
+    var employers = [];
+
+    for (var item in map)
+      employers.add(Employer.fromEvent(
+          item["name"], item["nickname"], item["number"], item["photo"]));
+
+    return employers;
+  }
+
   static findEmployerByNumber(String number) async {
     var response = await http.get(
         Uri.parse(

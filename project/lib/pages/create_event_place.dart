@@ -2,13 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:project/models/department_repository.dart';
+import 'package:project/models/employer_repository.dart';
+import 'package:project/models/team_repository.dart';
+import 'package:project/pages/create_event_people.dart';
 
 class CreateEventPlace extends StatefulWidget {
+  var _employer;
+  var _selectedEvent;
+
+  CreateEventPlace(this._employer, this._selectedEvent);
   @override
   _CreateEventPlaceState createState() => _CreateEventPlaceState();
 }
 
 class _CreateEventPlaceState extends State<CreateEventPlace> {
+  var _dateSelected = false;
+  var _timeSelected = false;
   var date = '__/__/__';
   var time = '__:__';
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
@@ -36,6 +46,8 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
         date += '/' + DateFormat.M().format(selectedDate).padLeft(2, '0');
         date += '/' + DateFormat.y().format(selectedDate);
       });
+
+    _dateSelected = true;
   }
 
   Future<Null> pickTime(BuildContext context) async {
@@ -54,6 +66,8 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
         minute = selectedTime.minute.toString().padLeft(2, '0');
         time = hour + ':' + minute;
       });
+
+    _timeSelected = true;
   }
 
   @override
@@ -214,13 +228,29 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
                   ),
                 ),
                 child: TextButton(
-                  onPressed: () {
-                    //passar selectedEvent como parametro
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        // return CreateEventPeople();
-                      }),
-                    );
+                  onPressed: () async {
+                    if (!_dateSelected || !_timeSelected) {
+                      showAlertDialog(context);
+                    } else {
+                      var departments =
+                          await DepartmentRepository.findAllDepartments();
+                      var teams = await TeamRepository.findAllTeams();
+                      var employers =
+                          await EmployerRepository.findAllEmployers();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return CreateEventPeople(
+                              this.widget._employer,
+                              this.widget._selectedEvent,
+                              this.date,
+                              this.time,
+                              this.selectedPlace,
+                              employers,
+                              teams,
+                              departments);
+                        }),
+                      );
+                    }
                   },
                   child: Text(
                     'Continuar',
@@ -237,4 +267,25 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
       ),
     );
   }
+
+  showAlertDialog(BuildContext context) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Data ou horário inválidos"),
+      content: Text("Selecione data e horário para o evento"),
+      actions: [
+        // okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  getLists() async {}
 }

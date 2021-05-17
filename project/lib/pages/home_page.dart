@@ -86,6 +86,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(left: 13, top: 5),
@@ -98,24 +100,30 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    alignment: Alignment.topRight,
-                                    margin: EdgeInsets.only(
-                                        left: 50, right: 5, top: 5),
-                                    child: Icon(
-                                      Icons.calendar_today,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5, right: 0),
-                                    alignment: Alignment.topRight,
-                                    child: Text(
-                                      getDate(
-                                          this._events[index].getDateTime()),
-                                      style: GoogleFonts.inter(
-                                        fontSize: 18,
+                                  Row(
+                                    children: [
+                                      Container(
+                                        alignment: Alignment.bottomRight,
+                                        margin: EdgeInsets.only(
+                                            left: 50, right: 5, top: 5),
+                                        child: Icon(
+                                          Icons.calendar_today,
+                                        ),
                                       ),
-                                    ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(top: 5, right: 10),
+                                        alignment: Alignment.bottomRight,
+                                        child: Text(
+                                          getDate(this
+                                              ._events[index]
+                                              .getDateTime()),
+                                          style: GoogleFonts.inter(
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               )
@@ -135,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return CreateEvent();
+                    return CreateEvent(this._employer);
                   }),
                 );
               },

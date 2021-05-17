@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/pages/create_event_place.dart';
 
 class CreateEvent extends StatefulWidget {
+  var _employer;
+  CreateEvent(this._employer);
   @override
   _CreateEventState createState() => _CreateEventState();
 }
@@ -26,6 +28,7 @@ class _CreateEventState extends State<CreateEvent> {
 
   // var animalTypes = ['Cachorro', 'Gato'];
   // var animalType = 'Cachorro';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -256,12 +259,16 @@ class _CreateEventState extends State<CreateEvent> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    //passar selectedEvent como parametro
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        return CreateEventPlace();
-                      }),
-                    );
+                    if (selected == 0)
+                      showAlertDialog(context);
+                    else {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return CreateEventPlace(
+                              this.widget._employer, this.selectedEvent);
+                        }),
+                      );
+                    }
                   },
                   child: Text(
                     'Continuar',
@@ -276,6 +283,25 @@ class _CreateEventState extends State<CreateEvent> {
           ),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Escolha um tipo"),
+      content: Text("Selecione um tipo de evento"),
+      actions: [
+        // okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
