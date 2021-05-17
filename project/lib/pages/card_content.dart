@@ -13,6 +13,7 @@ class CardContent extends StatelessWidget {
   var eventTime = '12:12';
   var eventPlace = 'Sala do cafézinho';
   var _event;
+  var _employer;
 
   getDate(DateTime dateTime) {
     var day = "${dateTime.day}";
@@ -39,7 +40,7 @@ class CardContent extends StatelessWidget {
   //   else if (object is Team)
   // }
 
-  CardContent(this._event);
+  CardContent(this._event, this._employer);
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +71,17 @@ class CardContent extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(right: 10, top: 10),
-                          child: Icon(
-                            Icons.edit,
-                            size: 30,
+                        Visibility(
+                          visible: this._event.getEventCreator().getNumber() ==
+                                  this._employer.getNumber()
+                              ? true
+                              : false,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 10, top: 10),
+                            child: Icon(
+                              Icons.edit,
+                              size: 30,
+                            ),
                           ),
                         ),
                       ],
@@ -124,12 +131,22 @@ class CardContent extends StatelessWidget {
                       child: Text(
                         this._event.getPlace(),
                         style: GoogleFonts.inter(
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
                     ),
                     Container(
-                      height: 200,
+                      margin: EdgeInsets.only(left: 10, top: 15),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Criador: ${this._event.getEventCreator().getName()}",
+                        style: GoogleFonts.inter(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 170,
                       child: ListView.builder(
                           itemCount: this._event.getMembersEvent().length,
                           itemBuilder: (BuildContext context, int index) {
@@ -187,12 +204,18 @@ class CardContent extends StatelessWidget {
                                     )));
                           }),
                     ), // aqui vem a lista de participantes
-                    Container(
-                      alignment: Alignment.bottomRight,
-                      child: Icon(
-                        Icons.delete_outline,
-                        size: 40,
-                        color: Colors.red,
+                    Visibility(
+                      visible: this._event.getEventCreator().getNumber() ==
+                              this._employer.getNumber()
+                          ? true
+                          : false,
+                      child: Container(
+                        alignment: Alignment.bottomRight,
+                        child: Icon(
+                          Icons.delete_outline,
+                          size: 40,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   ],

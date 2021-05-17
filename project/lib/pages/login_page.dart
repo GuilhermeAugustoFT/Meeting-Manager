@@ -129,8 +129,12 @@ class _LoginPageState extends State<LoginPage> {
                         var events =
                             await EmployerRepository.findEventsByNumber(
                                 numberController.text);
+
+                        var employer =
+                            await EmployerRepository.findEmployerByNumber(
+                                numberController.text);
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomePage(events)));
+                            builder: (context) => HomePage(events, employer)));
                       } else
                         print('Funcionario invalido');
                     } catch (error) {

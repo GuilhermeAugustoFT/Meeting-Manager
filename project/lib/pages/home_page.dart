@@ -6,17 +6,19 @@ import 'package:project/pages/hero_dialog_route.dart';
 
 class HomePage extends StatefulWidget {
   var _events;
+  var _employer;
 
-  HomePage(this._events);
+  HomePage(this._events, this._employer);
 
   @override
-  _HomePageState createState() => _HomePageState(this._events);
+  _HomePageState createState() => _HomePageState(this._events, this._employer);
 }
 
 class _HomePageState extends State<HomePage> {
   var _events;
+  var _employer;
 
-  _HomePageState(this._events);
+  _HomePageState(this._events, this._employer);
 
   var defaultColor = Color.fromRGBO(87, 103, 222, 1);
 
@@ -66,7 +68,8 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             Navigator.of(context)
                                 .push(HeroDialogRoute(builder: (context) {
-                              return CardContent(this._events[index]);
+                              return CardContent(
+                                  this._events[index], this._employer);
                             }));
                           },
                           child: Column(
