@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/models/employer.dart';
 import 'package:project/pages/hero_dialog_route.dart';
 
 class CardContent extends StatelessWidget {
@@ -27,6 +28,17 @@ class CardContent extends StatelessWidget {
     return "${dateTime.hour}:${dateTime.minute}";
   }
 
+  getNickname(object) {
+    if (object is Employer) return object.getNickname();
+
+    return "";
+  }
+
+  // getName(object) {
+  //   if (object is Employer) return object.getName();
+  //   else if (object is Team)
+  // }
+
   CardContent(this._event);
 
   @override
@@ -49,20 +61,20 @@ class CardContent extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 10),
+                          margin: EdgeInsets.only(left: 10, top: 10),
                           child: Text(
                             this._event.getName(),
                             style: GoogleFonts.inter(
-                              fontSize: 27,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: 10),
+                          margin: EdgeInsets.only(right: 10, top: 10),
                           child: Icon(
                             Icons.edit,
-                            size: 35,
+                            size: 30,
                           ),
                         ),
                       ],
@@ -118,12 +130,68 @@ class CardContent extends StatelessWidget {
                     ),
                     Container(
                       height: 200,
+                      child: ListView.builder(
+                          itemCount: this._event.getMembersEvent().length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                                height: 80,
+                                width: 50,
+                                child: Card(
+                                    color: Color.fromRGBO(190, 190, 190, 1),
+                                    elevation: 10,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 60,
+                                          width: 60,
+                                          margin: EdgeInsets.only(left: 10),
+                                          decoration: BoxDecoration(
+                                              color: Colors.orange,
+                                              shape: BoxShape.rectangle,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(50))),
+                                          child: Icon(Icons.pets),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                margin: EdgeInsets.only(
+                                                    top: 15, left: 10),
+                                                child: Text(
+                                                    this
+                                                        ._event
+                                                        .getMembersEvent()[
+                                                            index]
+                                                        .getName(),
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                            Container(
+                                                alignment: Alignment.topLeft,
+                                                margin: EdgeInsets.only(top: 5),
+                                                child: Text(
+                                                    getNickname(this
+                                                            ._event
+                                                            .getMembersEvent()[
+                                                        index]),
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                          ],
+                                        )
+                                      ],
+                                    )));
+                          }),
                     ), // aqui vem a lista de participantes
                     Container(
                       alignment: Alignment.bottomRight,
                       child: Icon(
                         Icons.delete_outline,
-                        size: 50,
+                        size: 40,
                         color: Colors.red,
                       ),
                     ),
