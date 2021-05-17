@@ -11,6 +11,8 @@ class Employer {
 
   Employer.fromEmployer(this._number, this._password);
 
+  Employer.fromEvent(this._name, this._nickname, this._photo, this._number);
+
   getName() {
     return this._name;
   }

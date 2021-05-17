@@ -125,10 +125,13 @@ class _LoginPageState extends State<LoginPage> {
                               Employer.fromEmployer(numberController.text,
                                   passwordController.text));
 
-                      if (statusCode == 200)
+                      if (statusCode == 200) {
+                        var events =
+                            await EmployerRepository.findEventsByNumber(
+                                numberController.text);
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => HomePage()));
-                      else
+                            builder: (context) => HomePage(events)));
+                      } else
                         print('Funcionario invalido');
                     } catch (error) {
                       print('Erro durante requisicao');

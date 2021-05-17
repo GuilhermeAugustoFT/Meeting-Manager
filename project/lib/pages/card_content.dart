@@ -11,6 +11,23 @@ class CardContent extends StatelessWidget {
   var eventDate = '12/12/21';
   var eventTime = '12:12';
   var eventPlace = 'Sala do cafézinho';
+  var _event;
+
+  getDate(DateTime dateTime) {
+    var day = "${dateTime.day}";
+    var month = "${dateTime.month}";
+    if (dateTime.day < 10) day = "0${dateTime.day}";
+
+    if (dateTime.month < 10) month = "0${dateTime.month}";
+
+    return "$day/$month/${dateTime.year}";
+  }
+
+  getTime(DateTime dateTime) {
+    return "${dateTime.hour}:${dateTime.minute}";
+  }
+
+  CardContent(this._event);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +51,7 @@ class CardContent extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(left: 10),
                           child: Text(
-                            eventType,
+                            this._event.getName(),
                             style: GoogleFonts.inter(
                               fontSize: 27,
                               fontWeight: FontWeight.bold,
@@ -64,7 +81,7 @@ class CardContent extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(left: 5, top: 5),
                             child: Text(
-                              eventDate,
+                              getDate(this._event.getDateTime()),
                               style: GoogleFonts.inter(
                                 fontSize: 18,
                               ),
@@ -80,7 +97,7 @@ class CardContent extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(left: 5, top: 5),
                             child: Text(
-                              eventDate,
+                              getTime(this._event.getDateTime()),
                               style: GoogleFonts.inter(
                                 fontSize: 18,
                               ),
@@ -93,7 +110,7 @@ class CardContent extends StatelessWidget {
                       margin: EdgeInsets.only(left: 10, top: 15),
                       alignment: Alignment.topLeft,
                       child: Text(
-                        eventPlace,
+                        this._event.getPlace(),
                         style: GoogleFonts.inter(
                           fontSize: 20,
                         ),

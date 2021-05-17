@@ -5,14 +5,31 @@ import 'package:project/pages/create_event_page.dart';
 import 'package:project/pages/hero_dialog_route.dart';
 
 class HomePage extends StatefulWidget {
+  var _events;
+
+  HomePage(this._events);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(this._events);
 }
 
 class _HomePageState extends State<HomePage> {
+  var _events;
+
+  _HomePageState(this._events);
+
   var defaultColor = Color.fromRGBO(87, 103, 222, 1);
 
-  var events = ['opa', 'salve'];
+  getDate(DateTime dateTime) {
+    var day = "${dateTime.day}";
+    var month = "${dateTime.month}";
+    if (dateTime.day < 10) day = "0${dateTime.day}";
+
+    if (dateTime.month < 10) month = "0${dateTime.month}";
+
+    return "$day/$month/${dateTime.year}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         child: Stack(children: [
           Container(
             child: ListView.builder(
-              itemCount: events.length,
+              itemCount: this._events.length,
               itemBuilder: (BuildContext context, int index) {
                 return Center(
                   child: Container(
@@ -49,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             Navigator.of(context)
                                 .push(HeroDialogRoute(builder: (context) {
-                              return CardContent();
+                              return CardContent(this._events[index]);
                             }));
                           },
                           child: Column(
@@ -58,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                                 margin: EdgeInsets.only(left: 13, top: 7),
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Reunião',
+                                  this._events[index].getName(),
                                   style: GoogleFonts.inter(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -71,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                                     margin: EdgeInsets.only(left: 13, top: 5),
                                     alignment: Alignment.bottomLeft,
                                     child: Text(
-                                      'Sala do cafézinho',
+                                      this._events[index].getPlace(),
                                       style: GoogleFonts.inter(
                                         fontSize: 18,
                                         fontWeight: FontWeight.normal,
@@ -79,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Container(
+                                    alignment: Alignment.topRight,
                                     margin: EdgeInsets.only(
                                         left: 50, right: 5, top: 5),
                                     child: Icon(
@@ -86,10 +104,11 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(top: 5),
-                                    alignment: Alignment.bottomRight,
+                                    margin: EdgeInsets.only(top: 5, right: 0),
+                                    alignment: Alignment.topRight,
                                     child: Text(
-                                      '12/08/21',
+                                      getDate(
+                                          this._events[index].getDateTime()),
                                       style: GoogleFonts.inter(
                                         fontSize: 18,
                                       ),
