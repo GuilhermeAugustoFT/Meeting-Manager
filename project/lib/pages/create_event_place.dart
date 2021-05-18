@@ -22,12 +22,15 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
   var date = '__/__/__';
   var time = '__:__';
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
+
   var places = [
     'Sala de reunião',
     'Sala do cafézinho',
     'Pátio',
     'Google Meet',
+    'Sala do diretor'
   ];
+
   var selectedPlace = 'Sala de reunião';
 
   Future<Null> pickDate(BuildContext context) async {
@@ -281,16 +284,12 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
   }
 
   showAlertDialog(BuildContext context) {
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Data ou horário inválidos"),
       content: Text("Selecione data e horário para o evento"),
-      actions: [
-        // okButton,
-      ],
+      actions: [],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -298,6 +297,4 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
       },
     );
   }
-
-  getLists() async {}
 }

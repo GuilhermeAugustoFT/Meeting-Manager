@@ -4,12 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/employer.dart';
 import 'package:project/models/employer_repository.dart';
 import 'package:project/models/event_repository.dart';
-
 import 'home_page.dart';
 
 class CardContent extends StatelessWidget {
-  /// {@macro todo_card}
-
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
   var eventType = 'Reunião';
   var eventDate = '12/12/21';
@@ -17,6 +14,8 @@ class CardContent extends StatelessWidget {
   var eventPlace = 'Sala do cafézinho';
   var _event;
   var _employer;
+
+  CardContent(this._event, this._employer);
 
   getDate(DateTime dateTime) {
     var day = "${dateTime.day}";
@@ -44,13 +43,6 @@ class CardContent extends StatelessWidget {
 
     return "";
   }
-
-  // getName(object) {
-  //   if (object is Employer) return object.getName();
-  //   else if (object is Team)
-  // }
-
-  CardContent(this._event, this._employer);
 
   @override
   Widget build(BuildContext context) {

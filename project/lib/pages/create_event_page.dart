@@ -4,7 +4,9 @@ import 'package:project/pages/create_event_place.dart';
 
 class CreateEvent extends StatefulWidget {
   var _employer;
+
   CreateEvent(this._employer);
+
   @override
   _CreateEventState createState() => _CreateEventState();
 }
@@ -24,10 +26,8 @@ class _CreateEventState extends State<CreateEvent> {
     'Sprint review',
     'Sprint Retropesctive'
   ];
-  var scrumType = 'Backlog do produto';
 
-  // var animalTypes = ['Cachorro', 'Gato'];
-  // var animalType = 'Cachorro';
+  var scrumType = 'Backlog do produto';
 
   @override
   Widget build(BuildContext context) {
@@ -288,16 +288,12 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   showAlertDialog(BuildContext context) {
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Escolha um tipo"),
       content: Text("Selecione um tipo de evento"),
-      actions: [
-        // okButton,
-      ],
+      actions: [],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

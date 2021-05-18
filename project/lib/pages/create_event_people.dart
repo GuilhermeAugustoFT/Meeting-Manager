@@ -48,10 +48,6 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
 
   var selectedParticipants = [];
   var selectedColor = Color.fromRGBO(190, 190, 190, 1);
-
-  _CreateEventPeopleState(
-      this._employers, this._teams, this._departments, this._selectedList);
-
   var _selectedList;
 
   getNickname(object) {
@@ -59,6 +55,9 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
 
     return "";
   }
+
+  _CreateEventPeopleState(
+      this._employers, this._teams, this._departments, this._selectedList);
 
   @override
   Widget build(BuildContext context) {
