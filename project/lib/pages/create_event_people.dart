@@ -167,7 +167,7 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                                                 _selectedList[index].getPhoto(),
                                               )
                                             : NetworkImage(
-                                                "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1"),
+                                                "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s75-c-fbw=1/photo.jpg"),
                                         fit: BoxFit.fill)),
                               ),
                               Column(
@@ -205,7 +205,8 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                                             EdgeInsets.only(left: 15, top: 7),
                                         child: Icon(
                                           Icons.check_circle_outline_sharp,
-                                          color: Colors.black,
+                                          color:
+                                              Color.fromRGBO(87, 103, 222, 1),
                                         ),
                                       ))
                                 ],
