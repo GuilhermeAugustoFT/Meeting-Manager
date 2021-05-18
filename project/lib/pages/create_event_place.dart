@@ -45,9 +45,8 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
         date += DateFormat.d().format(selectedDate).padLeft(2, '0');
         date += '/' + DateFormat.M().format(selectedDate).padLeft(2, '0');
         date += '/' + DateFormat.y().format(selectedDate);
+        _dateSelected = true;
       });
-
-    _dateSelected = true;
   }
 
   Future<Null> pickTime(BuildContext context) async {
@@ -65,9 +64,8 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
         hour = selectedTime.hour.toString().padLeft(2, '0');
         minute = selectedTime.minute.toString().padLeft(2, '0');
         time = hour + ':' + minute;
+        _timeSelected = true;
       });
-
-    _timeSelected = true;
   }
 
   @override
@@ -242,6 +240,14 @@ class _CreateEventPlaceState extends State<CreateEventPlace> {
                       var teams = await TeamRepository.findAllTeams();
                       var employers =
                           await EmployerRepository.findAllEmployers();
+
+                      for (var employer in employers)
+                        if (employer.getNumber() ==
+                            this.widget._employer.getNumber()) {
+                          employers.remove(employer);
+                          break;
+                        }
+
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {
                           return CreateEventPeople(

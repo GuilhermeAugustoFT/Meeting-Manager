@@ -77,8 +77,11 @@ class EmployerRepository {
       var membersEvent = [];
       for (var member in item["membersEvent"]) {
         if (member.containsKey("employer")) {
-          var employer = Employer.fromEvent(member["employer"]["name"],
-              member["employer"]["nickname"], "", member["employer"]["number"]);
+          var employer = Employer.fromEvent(
+              member["employer"]["name"],
+              member["employer"]["nickname"],
+              member["employer"]["photo"],
+              member["employer"]["number"]);
 
           membersEvent.add(employer);
         } else if (member.containsKey("team")) {
@@ -90,8 +93,8 @@ class EmployerRepository {
         }
       }
 
-      events.add(Event(
-          item["name"], datetime, item["place"], eventCreator, membersEvent));
+      events.add(Event(item["id"], item["name"], datetime, item["place"],
+          eventCreator, membersEvent));
     }
 
     return events;

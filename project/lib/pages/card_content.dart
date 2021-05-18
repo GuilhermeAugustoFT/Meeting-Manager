@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/employer.dart';
+import 'package:project/models/employer_repository.dart';
+import 'package:project/models/event_repository.dart';
+
+import 'home_page.dart';
 
 class CardContent extends StatelessWidget {
   /// {@macro todo_card}
@@ -25,7 +29,14 @@ class CardContent extends StatelessWidget {
   }
 
   getTime(DateTime dateTime) {
-    return "${dateTime.hour}:${dateTime.minute}";
+    var hours = "${dateTime.hour}";
+    var minutes = "${dateTime.minute}";
+
+    if (dateTime.hour < 10) hours = "0${dateTime.hour}";
+
+    if (dateTime.minute < 10) minutes = "0${dateTime.minute}";
+
+    return "$hours:$minutes";
   }
 
   getNickname(object) {
@@ -135,7 +146,7 @@ class CardContent extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 10, top: 15),
+                      margin: EdgeInsets.only(left: 10, top: 10),
                       alignment: Alignment.topLeft,
                       child: Text(
                         "Criador: ${this._event.getEventCreator().getName()}",
@@ -160,16 +171,28 @@ class CardContent extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Container(
-                                          height: 60,
-                                          width: 60,
-                                          margin: EdgeInsets.only(left: 10),
-                                          decoration: BoxDecoration(
-                                              color: Colors.orange,
-                                              shape: BoxShape.rectangle,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(50))),
-                                          child: Icon(Icons.pets),
-                                        ),
+                                            height: 60,
+                                            width: 60,
+                                            margin: EdgeInsets.only(left: 10),
+                                            decoration: BoxDecoration(
+                                                color: Colors.orange,
+                                                shape: BoxShape.circle,
+                                                // shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                    image: this
+                                                                ._event
+                                                                .getMembersEvent()[
+                                                            index] is Employer
+                                                        ? NetworkImage(
+                                                            this
+                                                                ._event
+                                                                .getMembersEvent()[
+                                                                    index]
+                                                                .getPhoto(),
+                                                          )
+                                                        : NetworkImage(
+                                                            "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1"),
+                                                    fit: BoxFit.fill))),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -221,10 +244,28 @@ class CardContent extends StatelessWidget {
                           : false,
                       child: Container(
                         alignment: Alignment.bottomRight,
-                        child: Icon(
-                          Icons.delete_outline,
-                          size: 40,
-                          color: Colors.red,
+                        child: GestureDetector(
+                          onTap: () async {
+                            var statusCode =
+                                await EventRepository.deleteEventById(
+                                    this._event.getId());
+
+                            if (statusCode == 200) {
+                              var events =
+                                  await EmployerRepository.findEventsByNumber(
+                                      this._employer.getNumber());
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) {
+                                  return HomePage(events, this._employer);
+                                }),
+                              );
+                            }
+                          },
+                          child: Icon(
+                            Icons.delete_outline,
+                            size: 40,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                     ),

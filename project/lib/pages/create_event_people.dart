@@ -161,10 +161,15 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                                 margin: EdgeInsets.only(left: 10),
                                 decoration: BoxDecoration(
                                     color: Colors.orange,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
-                                child: Icon(Icons.pets),
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: _selectedList[index] is Employer
+                                            ? NetworkImage(
+                                                _selectedList[index].getPhoto(),
+                                              )
+                                            : NetworkImage(
+                                                "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1"),
+                                        fit: BoxFit.fill)),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +247,6 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
 
                     if (statusCode == 200) {
                       for (var participant in selectedParticipants) {
-                        print("a");
                         if (participant is Employer) {
                           SmsSender sender = new SmsSender();
                           print(participant.getNumber());
@@ -269,7 +273,7 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                       print("Erro inserir evento");
                   },
                   child: Text(
-                    'Criar evento',
+                    'Criar Evento',
                     style: GoogleFonts.inter(
                         color: Colors.white,
                         fontSize: 20,

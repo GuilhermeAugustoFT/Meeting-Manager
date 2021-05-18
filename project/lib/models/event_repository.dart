@@ -34,4 +34,13 @@ class EventRepository {
 
     return response.statusCode;
   }
+
+  static deleteEventById(int id) async {
+    var response = await http.delete(
+        Uri.parse(
+            'https://meeting-manager-api.herokuapp.com/api/deleteEventById/$id'),
+        headers: {"Content-Type": "application/json"});
+
+    return response.statusCode;
+  }
 }
