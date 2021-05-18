@@ -42,246 +42,230 @@ class _CreateEventState extends State<CreateEvent> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(top: 50),
-          height: MediaQuery.of(context).size.height,
-          margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-          child: Column(
-            children: [
-              // Container(
-              //   alignment: Alignment.topLeft,
-              //   child: Text(
-              //     'Selecione o tipo do evento',
-              //     style: GoogleFonts.inter(
-              //       fontSize: 27,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = 1;
-                        selectedEvent = 'Reunião';
-                        inDropDown = false;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      height: 60,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        color: selected == 1 ? defaultColor : containerColor,
+      body: Container(
+        padding: EdgeInsets.only(top: 50),
+        height: MediaQuery.of(context).size.height,
+        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selected = 1;
+                      selectedEvent = 'Reunião';
+                      inDropDown = false;
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50),
+                    height: 60,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
                       ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Reunião',
-                          style: GoogleFonts.inter(
-                              fontSize: 20,
-                              color:
-                                  selected == 1 ? Colors.white : Colors.black),
-                        ),
+                      color: selected == 1 ? defaultColor : containerColor,
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Reunião',
+                        style: GoogleFonts.inter(
+                            fontSize: 20,
+                            color: selected == 1 ? Colors.white : Colors.black),
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = 2;
-                        selectedEvent = 'Mini Curso';
-                        inDropDown = false;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      height: 60,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        color: selected == 2 ? defaultColor : containerColor,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selected = 2;
+                      selectedEvent = 'Mini Curso';
+                      inDropDown = false;
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50),
+                    height: 60,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
                       ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Mini curso',
-                          style: GoogleFonts.inter(
-                              fontSize: 20,
-                              color:
-                                  selected == 2 ? Colors.white : Colors.black),
-                        ),
+                      color: selected == 2 ? defaultColor : containerColor,
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Mini curso',
+                        style: GoogleFonts.inter(
+                            fontSize: 20,
+                            color: selected == 2 ? Colors.white : Colors.black),
                       ),
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selected = 3;
+                      selectedEvent = 'Palestra';
+                      inDropDown = false;
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50),
+                    height: 60,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: selected == 3 ? defaultColor : containerColor,
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Palestra',
+                        style: GoogleFonts.inter(
+                            fontSize: 20,
+                            color: selected == 3 ? Colors.white : Colors.black),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selected = 4;
+                      selectedEvent = 'Apresentação';
+                      inDropDown = false;
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50),
+                    height: 60,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: selected == 4 ? defaultColor : containerColor,
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Apresentação',
+                        style: GoogleFonts.inter(
+                            fontSize: 20,
+                            color: selected == 4 ? Colors.white : Colors.black),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 50),
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color: containerColor,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = 3;
-                        selectedEvent = 'Palestra';
-                        inDropDown = false;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      height: 60,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        color: selected == 3 ? defaultColor : containerColor,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Palestra',
-                          style: GoogleFonts.inter(
-                              fontSize: 20,
-                              color:
-                                  selected == 3 ? Colors.white : Colors.black),
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selected = 4;
-                        selectedEvent = 'Apresentação';
-                        inDropDown = false;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      height: 60,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        color: selected == 4 ? defaultColor : containerColor,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Apresentação',
-                          style: GoogleFonts.inter(
-                              fontSize: 20,
-                              color:
-                                  selected == 4 ? Colors.white : Colors.black),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                height: 60,
-                width: 300,
+              child: Container(
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
-                  color: containerColor,
+                  color: selected == 5 ? defaultColor : containerColor,
                 ),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    color: selected == 5 ? defaultColor : containerColor,
-                  ),
-                  child: DropdownButtonFormField<String>(
-                      onTap: () {
-                        inDropDown = false;
-                      },
-                      dropdownColor: containerColor,
-                      decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusColor: Colors.green),
-                      value: scrumType,
-                      isExpanded: true,
-                      items: scrumTypes
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              value,
-                              style: GoogleFonts.inter(
-                                fontSize: 20,
-                                color: selected == 5 && !inDropDown
-                                    ? textColor
-                                    : Colors.black,
-                              ),
+                child: DropdownButtonFormField<String>(
+                    onTap: () {
+                      inDropDown = false;
+                    },
+                    dropdownColor: containerColor,
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusColor: Colors.green),
+                    value: scrumType,
+                    isExpanded: true,
+                    items: scrumTypes
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            value,
+                            style: GoogleFonts.inter(
+                              fontSize: 20,
+                              color: selected == 5 && !inDropDown
+                                  ? textColor
+                                  : Colors.black,
                             ),
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (String value) {
-                        setState(() {
-                          scrumType = value;
-                          textColor = Colors.white;
-                          selected = 5;
-                          selectedEvent = value;
-                          inDropDown = true;
-                          scrumTypes.remove(value);
-                          scrumTypes.insert(0, value);
-                        });
-                      }),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 220),
-                height: 50,
-                width: 320,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(87, 103, 222, 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    if (selected == 0)
-                      showAlertDialog(context);
-                    else {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return CreateEventPlace(
-                              this.widget._employer, this.selectedEvent);
-                        }),
+                        ),
                       );
-                    }
-                  },
-                  child: Text(
-                    'Continuar',
-                    style: GoogleFonts.inter(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
+                    }).toList(),
+                    onChanged: (String value) {
+                      setState(() {
+                        scrumType = value;
+                        textColor = Colors.white;
+                        selected = 5;
+                        selectedEvent = value;
+                        inDropDown = true;
+                        scrumTypes.remove(value);
+                        scrumTypes.insert(0, value);
+                      });
+                    }),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 220),
+              height: 50,
+              width: 320,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(87, 103, 222, 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
                 ),
               ),
-            ],
-          ),
+              child: TextButton(
+                onPressed: () {
+                  if (selected == 0)
+                    showAlertDialog(context);
+                  else {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return CreateEventPlace(
+                            this.widget._employer, this.selectedEvent);
+                      }),
+                    );
+                  }
+                },
+                child: Text(
+                  'Continuar',
+                  style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -138,7 +138,7 @@ class CardContent extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 10, top: 10),
+                      margin: EdgeInsets.only(left: 10, top: 5),
                       alignment: Alignment.topLeft,
                       child: Text(
                         "Criador: ${this._event.getEventCreator().getName()}",
@@ -183,7 +183,7 @@ class CardContent extends StatelessWidget {
                                                                 .getPhoto(),
                                                           )
                                                         : NetworkImage(
-                                                            "https://th.bing.com/th/id/OIP.hV6MoBaE8NYeMCugmhd7_QHaEo?pid=ImgDet&rs=1"),
+                                                            "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s75-c-fbw=1/photo.jpg"),
                                                     fit: BoxFit.fill))),
                                         Column(
                                           mainAxisAlignment:
