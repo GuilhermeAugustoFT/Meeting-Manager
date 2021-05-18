@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project/pages/edit_event_page.dart';
 import 'package:project/pages/login_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -7,7 +8,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: EditEventPage(),
     );
   }
 }
