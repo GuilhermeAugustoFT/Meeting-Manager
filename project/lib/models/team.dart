@@ -8,7 +8,7 @@ class Team {
 
   Team.fromTeam(this._id, this._name, this._teamLeader, this._membersTeam);
 
-  Team(this._name);
+  Team(this._id, this._name);
 
   getId() {
     return this._id;

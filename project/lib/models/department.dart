@@ -5,7 +5,7 @@ class Department {
 
   Department.fromDepartment(this._id, this._name, this._membersDepartment);
 
-  Department(this._name);
+  Department(this._id, this._name);
 
   getId() {
     return this._id;

@@ -30,7 +30,7 @@ class EmployerRepository {
 
     var map = jsonDecode(response.body);
     var employer = Employer.fromEvent(
-        map["name"], map["nickname"], map["photo"], map["number"]);
+        map["id"], map["name"], map["nickname"], map["photo"], map["number"]);
 
     return employer;
   }
@@ -70,6 +70,7 @@ class EmployerRepository {
       var seconds = int.parse(itemsTime[2]);
       var datetime = DateTime(year, month, day, hours, minutes, seconds);
       var eventCreator = Employer.fromEvent(
+          item["eventCreator"]["id"],
           item["eventCreator"]["name"],
           item["eventCreator"]["nickname"],
           item["eventCreator"]["photo"],
@@ -78,6 +79,7 @@ class EmployerRepository {
       for (var member in item["membersEvent"]) {
         if (member.containsKey("employer")) {
           var employer = Employer.fromEvent(
+              member["employer"]["id"],
               member["employer"]["name"],
               member["employer"]["nickname"],
               member["employer"]["photo"],
@@ -85,10 +87,11 @@ class EmployerRepository {
 
           membersEvent.add(employer);
         } else if (member.containsKey("team")) {
-          var team = Team(member["team"]["name"]);
+          var team = Team(member["team"]["id"], member["team"]["name"]);
           membersEvent.add(team);
         } else if (member.containsKey("department")) {
-          var department = Department(member["department"]["name"]);
+          var department = Department(
+              member["department"]["id"], member["department"]["name"]);
           membersEvent.add(department);
         }
       }

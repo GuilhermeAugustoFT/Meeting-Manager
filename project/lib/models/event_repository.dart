@@ -35,6 +35,75 @@ class EventRepository {
     return response.statusCode;
   }
 
+  static updateEventById(int id, String name, String date, String place,
+      List insertedParticipants, List deletedParticipants) async {
+    print(id);
+    print(name);
+    print(date);
+    print(place);
+
+    var mapInsertedParticipants = null;
+    var mapDeletedParticipants = null;
+
+    if (insertedParticipants != null) {
+      mapInsertedParticipants = [];
+      for (var insertedParticipant in insertedParticipants) {
+        if (insertedParticipant is Employer)
+          mapInsertedParticipants.add({
+            'employerId': insertedParticipant.getId(),
+          });
+        else if (insertedParticipant is Team)
+          mapInsertedParticipants.add({
+            'teamId': insertedParticipant.getId(),
+          });
+        else if (insertedParticipant is Department)
+          mapInsertedParticipants.add({
+            'departmentId': insertedParticipant.getId(),
+          });
+      }
+    }
+
+    if (deletedParticipants != null) {
+      mapDeletedParticipants = [];
+      for (var deletedParticipant in deletedParticipants) {
+        if (deletedParticipant is Employer)
+          mapDeletedParticipants.add({
+            'employerId': deletedParticipant.getId(),
+          });
+        else if (deletedParticipant is Team)
+          mapDeletedParticipants.add({
+            'teamId': deletedParticipant.getId(),
+          });
+        else if (deletedParticipant is Department)
+          mapDeletedParticipants.add({
+            'departmentId': deletedParticipant.getId(),
+          });
+      }
+    }
+
+    print(mapInsertedParticipants);
+    print(mapDeletedParticipants);
+
+    var body = jsonEncode({
+      'id': id,
+      'name': name,
+      'date': date,
+      'place': place,
+      'insertedParticipants': insertedParticipants,
+      'deletedParticipants': deletedParticipants,
+    });
+
+    print(body);
+
+    // var response = await http.put(
+    //     Uri.parse(
+    //         'https://meeting-manager-api.herokuapp.com/api/updateEventById'),
+    //     body: body,
+    //     headers: {"Content-Type": "application/json"});
+
+    // return response.statusCode;
+  }
+
   static deleteEventById(int id) async {
     var response = await http.delete(
         Uri.parse(

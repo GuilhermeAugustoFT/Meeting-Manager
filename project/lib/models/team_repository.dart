@@ -17,14 +17,14 @@ class TeamRepository {
     for (var item in map) {
       var membersTeam = [];
       for (var memberTeam in item["membersTeam"])
-        membersTeam.add(Employer.fromEvent(
+        membersTeam.add(Employer.fromTeam(
           memberTeam["name"],
           memberTeam["nickname"],
           memberTeam["number"],
           memberTeam["photo"],
         ));
 
-      var teamLeader = Employer.fromEvent(
+      var teamLeader = Employer.fromTeam(
           item["teamLeader"]["name"],
           item["teamLeader"]["nickname"],
           item["teamLeader"]["photo"],

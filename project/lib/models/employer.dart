@@ -15,7 +15,10 @@ class Employer {
   Employer.allEmployers(
       this._id, this._name, this._nickname, this._number, this._photo);
 
-  Employer.fromEvent(this._name, this._nickname, this._photo, this._number);
+  Employer.fromEvent(
+      this._id, this._name, this._nickname, this._photo, this._number);
+
+  Employer.fromTeam(this._name, this._nickname, this._number, this._photo);
 
   getId() {
     return this._id;

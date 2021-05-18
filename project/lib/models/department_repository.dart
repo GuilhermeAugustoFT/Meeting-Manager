@@ -16,7 +16,7 @@ class DepartmentRepository {
     for (var item in map) {
       var membersDepartment = [];
       for (var memberDepartment in item["membersDepartment"])
-        membersDepartment.add(Employer.fromEvent(
+        membersDepartment.add(Employer.fromTeam(
           memberDepartment["name"],
           memberDepartment["nickname"],
           memberDepartment["number"],

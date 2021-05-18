@@ -2,10 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:project/pages/create_event_people.dart';
+import 'package:project/pages/edit_people_page.dart';
 
 class EditEventPage extends StatefulWidget {
+  var _id;
+  var _eventType;
+  var _eventCreator;
+  var _date;
+  var _time;
+  var _place;
+  var _participants;
+
   @override
   _EditEventPageState createState() => _EditEventPageState();
+
+  EditEventPage(this._id, this._eventType, this._eventCreator, this._date,
+      this._time, this._place, this._participants);
 }
 
 class _EditEventPageState extends State<EditEventPage> {
@@ -30,6 +43,7 @@ class _EditEventPageState extends State<EditEventPage> {
   ];
 
   var scrumType = 'Reunião';
+  var place = "Sala de reunião";
 
   var date = '__/__/__';
   var time = '__:__';
@@ -45,10 +59,12 @@ class _EditEventPageState extends State<EditEventPage> {
     if (picked != null)
       setState(() {
         selectedDate = picked;
-        date = '';
-        date += DateFormat.d().format(selectedDate).padLeft(2, '0');
-        date += '/' + DateFormat.M().format(selectedDate).padLeft(2, '0');
-        date += '/' + DateFormat.y().format(selectedDate);
+        this.widget._date = '';
+        this.widget._date +=
+            DateFormat.d().format(selectedDate).padLeft(2, '0');
+        this.widget._date +=
+            '/' + DateFormat.M().format(selectedDate).padLeft(2, '0');
+        this.widget._date += '/' + DateFormat.y().format(selectedDate);
       });
   }
 
@@ -66,7 +82,7 @@ class _EditEventPageState extends State<EditEventPage> {
         selectedTime = picked;
         hour = selectedTime.hour.toString().padLeft(2, '0');
         minute = selectedTime.minute.toString().padLeft(2, '0');
-        time = hour + ':' + minute;
+        this.widget._time = hour + ':' + minute;
       });
   }
 
@@ -84,9 +100,10 @@ class _EditEventPageState extends State<EditEventPage> {
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Container(
+        alignment: Alignment.center,
         height: double.infinity,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               alignment: Alignment.topLeft,
@@ -99,7 +116,7 @@ class _EditEventPageState extends State<EditEventPage> {
             ),
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: 20, left: 20),
+              margin: EdgeInsets.only(top: 20),
               height: 60,
               width: 350,
               decoration: BoxDecoration(
@@ -121,7 +138,7 @@ class _EditEventPageState extends State<EditEventPage> {
                     decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusColor: Colors.green),
-                    value: scrumType,
+                    value: this.widget._eventType,
                     isExpanded: true,
                     items: scrumTypes
                         .map<DropdownMenuItem<String>>((String value) {
@@ -139,7 +156,7 @@ class _EditEventPageState extends State<EditEventPage> {
                     }).toList(),
                     onChanged: (String value) {
                       setState(() {
-                        scrumType = value;
+                        this.widget._eventType = value;
                         scrumTypes.remove(value);
                         scrumTypes.insert(0, value);
                       });
@@ -184,7 +201,7 @@ class _EditEventPageState extends State<EditEventPage> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text(
-                          date,
+                          this.widget._date,
                           style: GoogleFonts.inter(
                             fontSize: 25,
                           ),
@@ -228,7 +245,7 @@ class _EditEventPageState extends State<EditEventPage> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text(
-                          time,
+                          this.widget._time,
                           style: GoogleFonts.inter(
                             fontSize: 25,
                           ),
@@ -241,7 +258,7 @@ class _EditEventPageState extends State<EditEventPage> {
             ),
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: 30, left: 20),
+              margin: EdgeInsets.only(top: 30),
               height: 60,
               width: 350,
               decoration: BoxDecoration(
@@ -263,10 +280,9 @@ class _EditEventPageState extends State<EditEventPage> {
                     decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusColor: Colors.green),
-                    value: scrumType,
+                    value: this.widget._place,
                     isExpanded: true,
-                    items: scrumTypes
-                        .map<DropdownMenuItem<String>>((String value) {
+                    items: places.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Container(
@@ -281,11 +297,109 @@ class _EditEventPageState extends State<EditEventPage> {
                     }).toList(),
                     onChanged: (String value) {
                       setState(() {
-                        scrumType = value;
-                        scrumTypes.remove(value);
-                        scrumTypes.insert(0, value);
+                        this.widget._place = value;
+                        places.remove(value);
+                        places.insert(0, value);
                       });
                     }),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(top: 30, left: 20),
+              child: Text(
+                'Editar Participantes',
+                style: GoogleFonts.inter(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 120,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        'Adicionar',
+                        style: GoogleFonts.inter(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return EditPeoplePage(
+                                this.widget._id,
+                                this.widget._eventType,
+                                this.widget._eventCreator,
+                                this.widget._date,
+                                this.widget._place,
+                                false,
+                                this.widget._participants);
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 120,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        'Excluir',
+                        style: GoogleFonts.inter(fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 50),
+              height: 50,
+              width: 320,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(87, 103, 222, 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: TextButton(
+                onPressed: () async {},
+                child: Text(
+                  'Criar Evento',
+                  style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
