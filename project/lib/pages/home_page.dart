@@ -106,9 +106,6 @@ class _HomePageState extends State<HomePage> {
                                         alignment: Alignment.bottomRight,
                                         margin: EdgeInsets.only(
                                             left: 50, right: 5, top: 5),
-                                        child: Icon(
-                                          Icons.calendar_today,
-                                        ),
                                       ),
                                       Container(
                                         margin:

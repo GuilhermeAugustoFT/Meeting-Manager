@@ -23,26 +23,27 @@ class _LoginPageState extends State<LoginPage> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: <Widget>[
+              // Container(
+              //   alignment: Alignment.center,
+              //   margin: EdgeInsets.only(top: 50),
+              //   child: Text(
+              //     'Meeting Manager',
+              //     style: GoogleFonts.inter(
+              //       fontSize: 25,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // ),
               Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(top: 50),
-                child: Text(
-                  'Meeting Manager',
-                  style: GoogleFonts.inter(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 30),
+                // color: Colors.black,
+                margin: EdgeInsets.only(top: 40),
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 300,
+                  height: 270,
+                  fit: BoxFit.fill,
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 60),
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
                   controller: numberController,
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(top: 100),
                 height: 60,
                 width: 250,
                 decoration: BoxDecoration(
@@ -145,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Fazer Login',
                     style: GoogleFonts.inter(
                         color: Colors.white,
-                        fontSize: 25,
+                        fontSize: 23,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
