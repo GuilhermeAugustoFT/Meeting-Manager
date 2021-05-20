@@ -8,23 +8,23 @@ import 'package:project/pages/home_page.dart';
 import 'package:sms/sms.dart';
 
 class AddPeoplePage extends StatefulWidget {
-  var _eventId;
+  var _event;
   var _employer;
   var _employers;
   var _teams;
   var _departments;
   var _selectedList;
 
-  AddPeoplePage(this._eventId, this._employer, this._employers, this._teams,
+  AddPeoplePage(this._event, this._employer, this._employers, this._teams,
       this._departments, this._selectedList);
 
   @override
-  _AddPeoplePageState createState() => _AddPeoplePageState(this._eventId,
+  _AddPeoplePageState createState() => _AddPeoplePageState(this._event,
       this._employers, this._teams, this._departments, this._selectedList);
 }
 
 class _AddPeoplePageState extends State<AddPeoplePage> {
-  var _eventId;
+  var _event;
   var _employers;
   var _teams;
   var _departments;
@@ -36,13 +36,26 @@ class _AddPeoplePageState extends State<AddPeoplePage> {
   var selectedColor = Color.fromRGBO(190, 190, 190, 1);
   var _selectedList;
 
-  _AddPeoplePageState(this._eventId, this._employers, this._teams,
+  _AddPeoplePageState(this._event, this._employers, this._teams,
       this._departments, this._selectedList);
 
   getNickname(object) {
     if (object is Employer) return object.getNickname();
 
     return "";
+  }
+
+  sendSms(number) async {
+    SmsSender sender = new SmsSender();
+    var titleMessage =
+        "${this._event.getName()} | Criador: ${this._event.getEventCreator().getName()}";
+
+    await sender.sendSms(new SmsMessage(number, titleMessage));
+
+    var message =
+        "Local: ${this._event.getPlace()} | Data: ${this._event.getDateTime().day}/${this._event.getDateTime().month}";
+
+    await sender.sendSms(new SmsMessage(number, message));
   }
 
   @override
@@ -215,12 +228,8 @@ class _AddPeoplePageState extends State<AddPeoplePage> {
                 ),
                 child: TextButton(
                   onPressed: () async {
-                    // print('\n\n');
-                    for (var participant in selectedParticipants)
-                      print(participant.toString());
-
                     var statusCode = await EventRepository.updateEventById(
-                        this._eventId,
+                        this._event.getId(),
                         null,
                         null,
                         null,
@@ -230,6 +239,11 @@ class _AddPeoplePageState extends State<AddPeoplePage> {
                     if (statusCode == 200) {
                       var events = await EmployerRepository.findEventsByNumber(
                           this.widget._employer.getNumber());
+
+                      for (var participant in selectedParticipants) {
+                        if (participant is Employer)
+                          await sendSms(participant.getNumber());
+                      }
 
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {

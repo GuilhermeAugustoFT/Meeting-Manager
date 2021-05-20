@@ -11,15 +11,15 @@ import 'add_people_page.dart';
 import 'delete_people_page.dart';
 
 class EditEventPage extends StatefulWidget {
-  var _id;
+  var _event;
   var _eventType;
   var _eventCreator;
   var _dateTime;
   var _place;
   var _participants;
 
-  EditEventPage(this._id, this._eventType, this._eventCreator, this._dateTime,
-      this._place, this._participants);
+  EditEventPage(this._event, this._eventType, this._eventCreator,
+      this._dateTime, this._place, this._participants);
 
   @override
   _EditEventPageState createState() => _EditEventPageState();
@@ -350,7 +350,7 @@ class _EditEventPageState extends State<EditEventPage> {
                         MaterialPageRoute(
                           builder: (context) {
                             return AddPeoplePage(
-                                this.widget._id,
+                                this.widget._event,
                                 this.widget._eventCreator,
                                 employers,
                                 teams,
@@ -386,7 +386,7 @@ class _EditEventPageState extends State<EditEventPage> {
                         MaterialPageRoute(
                           builder: (context) {
                             return DeletePeoplePage(
-                                this.widget._id,
+                                this.widget._event.getId(),
                                 this.widget._eventCreator,
                                 this.widget._participants);
                           },
@@ -431,7 +431,7 @@ class _EditEventPageState extends State<EditEventPage> {
                 onPressed: () async {
                   print("$date $time");
                   var statusCode = await EventRepository.updateEventById(
-                      this.widget._id,
+                      this.widget._event.getId(),
                       this.widget._eventType,
                       "$date $time",
                       this.widget._place,

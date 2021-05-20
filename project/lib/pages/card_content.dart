@@ -85,7 +85,7 @@ class CardContent extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) {
                                     return EditEventPage(
-                                        this._event.getId(),
+                                        this._event,
                                         this._event.getName(),
                                         this._event.getEventCreator(),
                                         this._event.getDateTime(),
