@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/pages/card_content.dart';
-import 'package:project/pages/create_event_page.dart';
 import 'package:project/pages/hero_dialog_route.dart';
+
+import 'create_event/create_event_name.dart';
 
 class HomePage extends StatefulWidget {
   var _events;
@@ -142,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return CreateEvent(this._employer);
+                    return CreateEventName(this._employer);
                   }),
                 );
               },

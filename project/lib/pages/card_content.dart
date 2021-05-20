@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/employer.dart';
 import 'package:project/models/employer_repository.dart';
 import 'package:project/models/event_repository.dart';
-import 'package:project/pages/edit_event_page.dart';
+import 'edit_event/edit_event_page.dart';
 import 'home_page.dart';
 
 class CardContent extends StatelessWidget {
@@ -88,8 +88,7 @@ class CardContent extends StatelessWidget {
                                         this._event.getId(),
                                         this._event.getName(),
                                         this._event.getEventCreator(),
-                                        getDate(this._event.getDateTime()),
-                                        getTime(this._event.getDateTime()),
+                                        this._event.getDateTime(),
                                         this._event.getPlace(),
                                         this._event.getMembersEvent());
                                   },
@@ -254,6 +253,7 @@ class CardContent extends StatelessWidget {
                           ? true
                           : false,
                       child: Container(
+                        margin: EdgeInsets.only(top: 10),
                         alignment: Alignment.bottomRight,
                         child: GestureDetector(
                           onTap: () async {

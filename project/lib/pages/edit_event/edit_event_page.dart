@@ -2,23 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:project/pages/create_event_people.dart';
-import 'package:project/pages/edit_people_page.dart';
+import 'package:project/models/department_repository.dart';
+import 'package:project/models/employer_repository.dart';
+import 'package:project/models/event_repository.dart';
+import 'package:project/models/team_repository.dart';
+import '../home_page.dart';
+import 'add_people_page.dart';
+import 'delete_people_page.dart';
 
 class EditEventPage extends StatefulWidget {
   var _id;
   var _eventType;
   var _eventCreator;
-  var _date;
-  var _time;
+  var _dateTime;
   var _place;
   var _participants;
 
+  EditEventPage(this._id, this._eventType, this._eventCreator, this._dateTime,
+      this._place, this._participants);
+
   @override
   _EditEventPageState createState() => _EditEventPageState();
-
-  EditEventPage(this._id, this._eventType, this._eventCreator, this._date,
-      this._time, this._place, this._participants);
 }
 
 class _EditEventPageState extends State<EditEventPage> {
@@ -45,8 +49,8 @@ class _EditEventPageState extends State<EditEventPage> {
   var scrumType = 'Reunião';
   var place = "Sala de reunião";
 
-  var date = '__/__/__';
-  var time = '__:__';
+  var date;
+  var time;
 
   pickDate(BuildContext context) async {
     var selectedDate;
@@ -59,12 +63,10 @@ class _EditEventPageState extends State<EditEventPage> {
     if (picked != null)
       setState(() {
         selectedDate = picked;
-        this.widget._date = '';
-        this.widget._date +=
-            DateFormat.d().format(selectedDate).padLeft(2, '0');
-        this.widget._date +=
-            '/' + DateFormat.M().format(selectedDate).padLeft(2, '0');
-        this.widget._date += '/' + DateFormat.y().format(selectedDate);
+        date = '';
+        date += DateFormat.d().format(selectedDate).padLeft(2, '0');
+        date += '/' + DateFormat.M().format(selectedDate).padLeft(2, '0');
+        date += '/' + DateFormat.y().format(selectedDate);
       });
   }
 
@@ -82,8 +84,20 @@ class _EditEventPageState extends State<EditEventPage> {
         selectedTime = picked;
         hour = selectedTime.hour.toString().padLeft(2, '0');
         minute = selectedTime.minute.toString().padLeft(2, '0');
-        this.widget._time = hour + ':' + minute;
+        time = hour + ':' + minute;
       });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    date = '';
+    date += DateFormat.d().format(this.widget._dateTime).padLeft(2, '0');
+    date += '/' + DateFormat.M().format(this.widget._dateTime).padLeft(2, '0');
+    date += '/' + DateFormat.y().format(this.widget._dateTime);
+    var hour = this.widget._dateTime.hour.toString().padLeft(2, '0');
+    var minute = this.widget._dateTime.minute.toString().padLeft(2, '0');
+    time = hour + ':' + minute;
   }
 
   @override
@@ -173,7 +187,6 @@ class _EditEventPageState extends State<EditEventPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          //abrir calendario
                           setState(() {
                             pickDate(context);
                           });
@@ -201,7 +214,7 @@ class _EditEventPageState extends State<EditEventPage> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text(
-                          this.widget._date,
+                          date,
                           style: GoogleFonts.inter(
                             fontSize: 25,
                           ),
@@ -245,7 +258,7 @@ class _EditEventPageState extends State<EditEventPage> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text(
-                          this.widget._time,
+                          time,
                           style: GoogleFonts.inter(
                             fontSize: 25,
                           ),
@@ -319,7 +332,34 @@ class _EditEventPageState extends State<EditEventPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      var employers =
+                          await EmployerRepository.findAllEmployers();
+                      var teams = await TeamRepository.findAllTeams();
+                      var departments =
+                          await DepartmentRepository.findAllDepartments();
+
+                      for (var employer in employers)
+                        if (employer.getNumber() ==
+                            this.widget._eventCreator.getNumber()) {
+                          employers.remove(employer);
+                          break;
+                        }
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AddPeoplePage(
+                                this.widget._id,
+                                this.widget._eventCreator,
+                                employers,
+                                teams,
+                                departments,
+                                employers);
+                          },
+                        ),
+                      );
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       width: 120,
@@ -345,13 +385,9 @@ class _EditEventPageState extends State<EditEventPage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return EditPeoplePage(
+                            return DeletePeoplePage(
                                 this.widget._id,
-                                this.widget._eventType,
                                 this.widget._eventCreator,
-                                this.widget._date,
-                                this.widget._place,
-                                false,
                                 this.widget._participants);
                           },
                         ),
@@ -392,9 +428,27 @@ class _EditEventPageState extends State<EditEventPage> {
                 ),
               ),
               child: TextButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  print("$date $time");
+                  var statusCode = await EventRepository.updateEventById(
+                      this.widget._id,
+                      this.widget._eventType,
+                      "$date $time",
+                      this.widget._place,
+                      null,
+                      null);
+
+                  if (statusCode == 200) {
+                    var events = await EmployerRepository.findEventsByNumber(
+                        this.widget._eventCreator.getNumber());
+
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) =>
+                            HomePage(events, this.widget._eventCreator)));
+                  }
+                },
                 child: Text(
-                  'Criar Evento',
+                  'Salvar Evento',
                   style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 20,

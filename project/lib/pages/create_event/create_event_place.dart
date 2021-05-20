@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:project/models/department_repository.dart';
 import 'package:project/models/employer_repository.dart';
 import 'package:project/models/team_repository.dart';
-import 'package:project/pages/create_event_people.dart';
+
+import 'create_event_people.dart';
 
 class CreateEventPlace extends StatefulWidget {
   var _employer;

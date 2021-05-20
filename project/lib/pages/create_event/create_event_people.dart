@@ -7,33 +7,53 @@ import 'package:project/models/event_repository.dart';
 import 'package:project/pages/home_page.dart';
 import 'package:sms/sms.dart';
 
-class EditPeoplePage extends StatefulWidget {
-  var _adding;
-  var _participants;
-  var _id;
-  var _name;
+class CreateEventPeople extends StatefulWidget {
+  var _employer;
+  var _selectedEvent;
   var _date;
+  var _time;
   var _place;
-  var _eventCreator;
+  var _employers;
+  var _teams;
+  var _departments;
+  var _selectedList;
 
-  EditPeoplePage(this._id, this._name, this._eventCreator, this._date,
-      this._place, this._adding, this._participants);
+  CreateEventPeople(
+      this._employer,
+      this._selectedEvent,
+      this._date,
+      this._time,
+      this._place,
+      this._employers,
+      this._teams,
+      this._departments,
+      this._selectedList);
 
   @override
-  _EditPeoplePageState createState() => _EditPeoplePageState();
+  _CreateEventPeopleState createState() => _CreateEventPeopleState(
+      this._employers, this._teams, this._departments, this._selectedList);
 }
 
-class _EditPeoplePageState extends State<EditPeoplePage> {
+class _CreateEventPeopleState extends State<CreateEventPeople> {
+  var _employers;
+  var _teams;
+  var _departments;
+
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
+  var participants = ['Funcionários', 'Times', 'Departamentos'];
 
   var selectedParticipants = [];
   var selectedColor = Color.fromRGBO(190, 190, 190, 1);
+  var _selectedList;
 
   getNickname(object) {
     if (object is Employer) return object.getNickname();
 
     return "";
   }
+
+  _CreateEventPeopleState(
+      this._employers, this._teams, this._departments, this._selectedList);
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +73,64 @@ class _EditPeoplePageState extends State<EditPeoplePage> {
         child: Column(
           children: [
             Container(
+              margin: EdgeInsets.only(top: 30, left: 40, right: 40),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color: containerColor,
+              ),
+              child: DropdownButtonFormField<String>(
+                  dropdownColor: containerColor,
+                  decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      focusColor: Colors.green),
+                  value: 'Funcionários',
+                  isExpanded: true,
+                  items: participants
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          value,
+                          style: GoogleFonts.inter(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      participants.remove(value);
+                      participants.insert(0, value);
+
+                      setState(() {
+                        if (value == "Funcionários")
+                          _selectedList = this._employers;
+                        else if (value == "Times")
+                          _selectedList = this._teams;
+                        else
+                          _selectedList = this._departments;
+                      });
+                    });
+                  }),
+            ),
+            Container(
               margin: EdgeInsets.only(top: 15),
               height: 500,
               child: ListView.builder(
-                  itemCount: this.widget._participants.length,
+                  itemCount: _selectedList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       height: 120,
                       padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                       child: Card(
                         color: selectedParticipants
-                                .contains(this.widget._participants[index])
+                                .contains(this._selectedList[index])
                             ? selectedColor
                             : Colors.white,
                         elevation: 10,
@@ -71,14 +138,14 @@ class _EditPeoplePageState extends State<EditPeoplePage> {
                           onTap: () {
                             setState(() {
                               if (selectedParticipants
-                                  .contains(this.widget._participants[index])) {
+                                  .contains(this._selectedList[index])) {
                                 selectedParticipants
-                                    .remove(this.widget._participants[index]);
+                                    .remove(this._selectedList[index]);
                                 return;
                               }
 
                               selectedParticipants
-                                  .add(this.widget._participants[index]);
+                                  .add(this._selectedList[index]);
                             });
                           },
                           child: Row(
@@ -91,13 +158,9 @@ class _EditPeoplePageState extends State<EditPeoplePage> {
                                     color: Colors.orange,
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                        image: this.widget._participants[index]
-                                                is Employer
+                                        image: _selectedList[index] is Employer
                                             ? NetworkImage(
-                                                this
-                                                    .widget
-                                                    ._participants[index]
-                                                    .getPhoto(),
+                                                _selectedList[index].getPhoto(),
                                               )
                                             : NetworkImage(
                                                 "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s75-c-fbw=1/photo.jpg"),
@@ -110,33 +173,27 @@ class _EditPeoplePageState extends State<EditPeoplePage> {
                                   Container(
                                       margin: EdgeInsets.only(left: 15),
                                       child: Text(
-                                          this
-                                              .widget
-                                              ._participants[index]
-                                              .getName(),
+                                          _selectedList[index].getName(),
                                           style: GoogleFonts.inter(
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold))),
                                   Visibility(
-                                    visible:
-                                        this.widget._participants[0] is Employer
-                                            ? true
-                                            : false,
+                                    visible: _selectedList[0] is Employer
+                                        ? true
+                                        : false,
                                     child: Container(
                                         alignment: Alignment.topLeft,
                                         margin:
                                             EdgeInsets.only(top: 5, left: 15),
                                         child: Text(
-                                            getNickname(this
-                                                .widget
-                                                ._participants[index]),
+                                            getNickname(_selectedList[index]),
                                             style: GoogleFonts.inter(
                                               fontSize: 15,
                                             ))),
                                   ),
                                   Visibility(
                                       visible: selectedParticipants.contains(
-                                              this.widget._participants[index])
+                                              this._selectedList[index])
                                           ? true
                                           : false,
                                       child: Container(
@@ -169,49 +226,47 @@ class _EditPeoplePageState extends State<EditPeoplePage> {
                 ),
                 child: TextButton(
                   onPressed: () async {
-                    for (var selectedParticipant in selectedParticipants)
-                      print(selectedParticipant.toString());
+                    print('\n\n');
+                    // for (var participant in selectedParticipants)
+                    //   print(participant.toString());
 
-                    if (this.widget._adding) {
-                      var statusCode = await EventRepository.updateEventById(
-                          this.widget._id,
-                          this.widget._name,
-                          this.widget._date,
-                          this.widget._place,
-                          selectedParticipants,
-                          null);
-                      if (statusCode == 200) {
-                        for (var participant in selectedParticipants) {
-                          if (participant is Employer) {
-                            SmsSender sender = new SmsSender();
-                            print(participant.getNumber());
-                            var titleMessage =
-                                "${this.widget._name} | Criador: ${this.widget._eventCreator.getName()}";
-                            await sender.sendSms(new SmsMessage(
-                                participant.getNumber(), titleMessage));
+                    var statusCode = await EventRepository.insertEvent(
+                        this.widget._selectedEvent,
+                        this.widget._employer,
+                        selectedParticipants,
+                        this.widget._place,
+                        this.widget._date,
+                        this.widget._time);
 
-                            var message =
-                                "Local: ${this.widget._place} | Data: ${this.widget._date}";
-                            await sender.sendSms(new SmsMessage(
-                                participant.getNumber(), message));
-                          }
+                    if (statusCode == 200) {
+                      for (var participant in selectedParticipants) {
+                        if (participant is Employer) {
+                          SmsSender sender = new SmsSender();
+                          print(participant.getNumber());
+                          var titleMessage =
+                              "${this.widget._selectedEvent} | Criador: ${this.widget._employer.getName()}";
+                          await sender.sendSms(new SmsMessage(
+                              participant.getNumber(), titleMessage));
+
+                          var message =
+                              "Local: ${this.widget._place} | Data: ${this.widget._date}";
+                          await sender.sendSms(
+                              new SmsMessage(participant.getNumber(), message));
                         }
-                      } else
-                        print("Erro inserir evento");
-                    } else {
-                      await EventRepository.updateEventById(
-                          this.widget._id,
-                          this.widget._name,
-                          this.widget._date,
-                          this.widget._place,
-                          null,
-                          selectedParticipants);
-                    }
+                      }
+
+                      var events = await EmployerRepository.findEventsByNumber(
+                          this.widget._employer.getNumber());
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return HomePage(events, this.widget._employer);
+                        }),
+                      );
+                    } else
+                      print("Erro inserir evento");
                   },
                   child: Text(
-                    this.widget._adding
-                        ? 'Adicionar Participantes'
-                        : 'Excluir Participantes',
+                    'Criar Evento',
                     style: GoogleFonts.inter(
                         color: Colors.white,
                         fontSize: 20,

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/pages/create_event_place.dart';
 
-class CreateEvent extends StatefulWidget {
+import 'create_event_place.dart';
+
+class CreateEventName extends StatefulWidget {
   var _employer;
 
-  CreateEvent(this._employer);
+  CreateEventName(this._employer);
 
   @override
-  _CreateEventState createState() => _CreateEventState();
+  _CreateEventNameState createState() => _CreateEventNameState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
+class _CreateEventNameState extends State<CreateEventName> {
   var defaultColor = Color.fromRGBO(87, 103, 222, 1);
   var containerColor = Color.fromRGBO(230, 230, 230, 1);
   var selected = 0;

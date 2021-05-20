@@ -7,34 +7,24 @@ import 'package:project/models/event_repository.dart';
 import 'package:project/pages/home_page.dart';
 import 'package:sms/sms.dart';
 
-class CreateEventPeople extends StatefulWidget {
+class AddPeoplePage extends StatefulWidget {
+  var _eventId;
   var _employer;
-  var _selectedEvent;
-  var _date;
-  var _time;
-  var _place;
   var _employers;
   var _teams;
   var _departments;
   var _selectedList;
 
-  CreateEventPeople(
-      this._employer,
-      this._selectedEvent,
-      this._date,
-      this._time,
-      this._place,
-      this._employers,
-      this._teams,
-      this._departments,
-      this._selectedList);
+  AddPeoplePage(this._eventId, this._employer, this._employers, this._teams,
+      this._departments, this._selectedList);
 
   @override
-  _CreateEventPeopleState createState() => _CreateEventPeopleState(
+  _AddPeoplePageState createState() => _AddPeoplePageState(this._eventId,
       this._employers, this._teams, this._departments, this._selectedList);
 }
 
-class _CreateEventPeopleState extends State<CreateEventPeople> {
+class _AddPeoplePageState extends State<AddPeoplePage> {
+  var _eventId;
   var _employers;
   var _teams;
   var _departments;
@@ -46,14 +36,14 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
   var selectedColor = Color.fromRGBO(190, 190, 190, 1);
   var _selectedList;
 
+  _AddPeoplePageState(this._eventId, this._employers, this._teams,
+      this._departments, this._selectedList);
+
   getNickname(object) {
     if (object is Employer) return object.getNickname();
 
     return "";
   }
-
-  _CreateEventPeopleState(
-      this._employers, this._teams, this._departments, this._selectedList);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +51,7 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Participantes',
+          'Novo Participante',
           style: GoogleFonts.inter(
               color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
         ),
@@ -107,7 +97,6 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                     setState(() {
                       participants.remove(value);
                       participants.insert(0, value);
-
                       setState(() {
                         if (value == "Funcionários")
                           _selectedList = this._employers;
@@ -226,40 +215,22 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                 ),
                 child: TextButton(
                   onPressed: () async {
-                    print(
-                        "Name: ${this.widget._selectedEvent} \n Creator number: ${this.widget._employer.getNumber()} \n Place: ${this.widget._place} \n Date: ${this.widget._date} \n Time: ${this.widget._time}");
-
-                    print('\n\n');
+                    // print('\n\n');
                     for (var participant in selectedParticipants)
                       print(participant.toString());
 
-                    var statusCode = await EventRepository.insertEvent(
-                        this.widget._selectedEvent,
-                        this.widget._employer,
+                    var statusCode = await EventRepository.updateEventById(
+                        this._eventId,
+                        null,
+                        null,
+                        null,
                         selectedParticipants,
-                        this.widget._place,
-                        this.widget._date,
-                        this.widget._time);
+                        null);
 
                     if (statusCode == 200) {
-                      for (var participant in selectedParticipants) {
-                        if (participant is Employer) {
-                          SmsSender sender = new SmsSender();
-                          print(participant.getNumber());
-                          var titleMessage =
-                              "${this.widget._selectedEvent} | Criador: ${this.widget._employer.getName()}";
-                          await sender.sendSms(new SmsMessage(
-                              participant.getNumber(), titleMessage));
-
-                          var message =
-                              "Local: ${this.widget._place} | Data: ${this.widget._date}";
-                          await sender.sendSms(
-                              new SmsMessage(participant.getNumber(), message));
-                        }
-                      }
-
                       var events = await EmployerRepository.findEventsByNumber(
                           this.widget._employer.getNumber());
+
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {
                           return HomePage(events, this.widget._employer);
@@ -269,7 +240,7 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
                       print("Erro inserir evento");
                   },
                   child: Text(
-                    'Criar Evento',
+                    'Inserir participantes',
                     style: GoogleFonts.inter(
                         color: Colors.white,
                         fontSize: 20,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:project/models/department.dart';
 import 'package:project/models/employer.dart';
@@ -37,13 +36,8 @@ class EventRepository {
 
   static updateEventById(int id, String name, String date, String place,
       List insertedParticipants, List deletedParticipants) async {
-    print(id);
-    print(name);
-    print(date);
-    print(place);
-
-    var mapInsertedParticipants = null;
-    var mapDeletedParticipants = null;
+    var mapInsertedParticipants;
+    var mapDeletedParticipants;
 
     if (insertedParticipants != null) {
       mapInsertedParticipants = [];
@@ -66,6 +60,7 @@ class EventRepository {
     if (deletedParticipants != null) {
       mapDeletedParticipants = [];
       for (var deletedParticipant in deletedParticipants) {
+        print(deletedParticipant);
         if (deletedParticipant is Employer)
           mapDeletedParticipants.add({
             'employerId': deletedParticipant.getId(),
@@ -81,27 +76,22 @@ class EventRepository {
       }
     }
 
-    print(mapInsertedParticipants);
-    print(mapDeletedParticipants);
-
     var body = jsonEncode({
       'id': id,
       'name': name,
       'date': date,
       'place': place,
-      'insertedParticipants': insertedParticipants,
-      'deletedParticipants': deletedParticipants,
+      'insertedParticipants': mapInsertedParticipants,
+      'deletedParticipants': mapDeletedParticipants,
     });
 
-    print(body);
+    var response = await http.put(
+        Uri.parse(
+            'https://meeting-manager-api.herokuapp.com/api/updateEventById'),
+        body: body,
+        headers: {"Content-Type": "application/json"});
 
-    // var response = await http.put(
-    //     Uri.parse(
-    //         'https://meeting-manager-api.herokuapp.com/api/updateEventById'),
-    //     body: body,
-    //     headers: {"Content-Type": "application/json"});
-
-    // return response.statusCode;
+    return response.statusCode;
   }
 
   static deleteEventById(int id) async {
