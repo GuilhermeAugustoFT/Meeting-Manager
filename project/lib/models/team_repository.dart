@@ -27,8 +27,8 @@ class TeamRepository {
       var teamLeader = Employer.fromTeam(
           item["teamLeader"]["name"],
           item["teamLeader"]["nickname"],
-          item["teamLeader"]["photo"],
-          item["teamLeader"]["number"]);
+          item["teamLeader"]["number"],
+          item["teamLeader"]["photo"]);
 
       teams.add(Team.fromTeam(
         item["id"],

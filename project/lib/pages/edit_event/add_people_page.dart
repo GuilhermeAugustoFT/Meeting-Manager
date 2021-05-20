@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/models/department.dart';
 import 'package:project/models/employer.dart';
 import 'package:project/models/employer_repository.dart';
 import 'package:project/models/event_repository.dart';
+import 'package:project/models/team.dart';
 import 'package:project/pages/home_page.dart';
 import 'package:sms/sms.dart';
 
@@ -52,10 +54,31 @@ class _AddPeoplePageState extends State<AddPeoplePage> {
 
     await sender.sendSms(new SmsMessage(number, titleMessage));
 
-    var message =
-        "Local: ${this._event.getPlace()} | Data: ${this._event.getDateTime().day}/${this._event.getDateTime().month}";
+    var day = "${this._event.getDateTime().day}";
+    var month = "${this._event.getDateTime().month}";
 
+    if (this._event.getDateTime().day < 10)
+      day = "0${this._event.getDateTime().day}";
+
+    if (this._event.getDateTime().month < 10)
+      month = "0${this._event.getDateTime().month}";
+
+    var message =
+        "Local: ${this._event.getPlace()} | Data: $day/$month/${this._event.getDateTime().year}";
     await sender.sendSms(new SmsMessage(number, message));
+
+    var hours = "${this._event.getDateTime().hour}";
+    var minutes = "${this._event.getDateTime().minute}";
+
+    if (this._event.getDateTime().hour < 10)
+      hours = "0${this._event.getDateTime().hour}";
+
+    if (this._event.getDateTime().minute < 10)
+      minutes = "0${this._event.getDateTime().minute}";
+
+    var time = "Horário: $hours:$minutes";
+
+    await sender.sendSms(new SmsMessage(number, time));
   }
 
   @override
@@ -243,6 +266,13 @@ class _AddPeoplePageState extends State<AddPeoplePage> {
                       for (var participant in selectedParticipants) {
                         if (participant is Employer)
                           await sendSms(participant.getNumber());
+                        else if (participant is Team)
+                          await sendSms(
+                              participant.getTeamLeader().getNumber());
+                        else if (participant is Department)
+                          for (var departmentMember
+                              in participant.getMembersDepartment())
+                            await sendSms(departmentMember.getNumber());
                       }
 
                       Navigator.of(context).push(

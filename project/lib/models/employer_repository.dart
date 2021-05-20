@@ -41,7 +41,7 @@ class EmployerRepository {
 
     var response = await http.post(
         Uri.parse(
-            'http://meeting-manager-api.herokuapp.com/api/authenticateEmployer'),
+            'https://meeting-manager-api.herokuapp.com/api/authenticateEmployer'),
         body: body,
         headers: {"Content-Type": "application/json"});
 

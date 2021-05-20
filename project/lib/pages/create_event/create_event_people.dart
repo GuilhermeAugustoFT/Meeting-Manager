@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/models/department.dart';
 import 'package:project/models/employer.dart';
 import 'package:project/models/employer_repository.dart';
 import 'package:project/models/event_repository.dart';
+import 'package:project/models/team.dart';
 import 'package:project/pages/home_page.dart';
 import 'package:sms/sms.dart';
 
@@ -50,6 +52,20 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
     if (object is Employer) return object.getNickname();
 
     return "";
+  }
+
+  sendSms(number) async {
+    SmsSender sender = new SmsSender();
+
+    var titleMessage =
+        "${this.widget._selectedEvent} | Criador: ${this.widget._employer.getName()}";
+    await sender.sendSms(new SmsMessage(number, titleMessage));
+
+    var message = "Local: ${this.widget._place} | Data: ${this.widget._date}";
+    await sender.sendSms(new SmsMessage(number, message));
+
+    var time = "Horário: ${this.widget._time}";
+    await sender.sendSms(new SmsMessage(number, time));
   }
 
   _CreateEventPeopleState(
@@ -240,19 +256,15 @@ class _CreateEventPeopleState extends State<CreateEventPeople> {
 
                     if (statusCode == 200) {
                       for (var participant in selectedParticipants) {
-                        if (participant is Employer) {
-                          SmsSender sender = new SmsSender();
-                          print(participant.getNumber());
-                          var titleMessage =
-                              "${this.widget._selectedEvent} | Criador: ${this.widget._employer.getName()}";
-                          await sender.sendSms(new SmsMessage(
-                              participant.getNumber(), titleMessage));
-
-                          var message =
-                              "Local: ${this.widget._place} | Data: ${this.widget._date}";
-                          await sender.sendSms(
-                              new SmsMessage(participant.getNumber(), message));
-                        }
+                        if (participant is Employer)
+                          await sendSms(participant.getNumber());
+                        else if (participant is Team)
+                          await sendSms(
+                              participant.getTeamLeader().getNumber());
+                        else if (participant is Department)
+                          for (var departmentMember
+                              in participant.getMembersDepartment())
+                            await sendSms(departmentMember.getNumber());
                       }
 
                       var events = await EmployerRepository.findEventsByNumber(
